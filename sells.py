@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import math
 
-def randomizer(indexindex, itemnumbers): #this is a recursive function to make sure there aren't any duplicates
-        itemnumber = np.random.choice(itemindex, replace=False) #randomly choose a number from the array of numbers
+def randomizer(itemindex, *itemnumbers): #this is a recursive function to make sure there aren't any duplicates
+        itemnumber = random.choice(itemindex) #randomly choose a number from the array of numbers
         for i in range(len(itemnumbers)):
                 if itemnumber == itemnumbers[i]:
                         itemnumber = randomizer(itemindex, itemnumber)
@@ -43,10 +43,13 @@ for i in range(len(bars)): #will go through each bar
     if i>=1:
         itemnumbers = [] #this array is going to be used when I make a function call later to choose which items to sell
         for j in range(irange): #going to go as many times as there are items in the specific bar
+            if j == 0:
+                itemnumber = random.choice(itemindex)
+                itemnumbers.append(itemnumber)    
             sellsbarname = bars[i]  
             sellsbarnames.append(sellsbarname) #all of these items will be sold by the same bar
             itemnumber = randomizer(itemindex, itemnumbers)
-                
+            itemnumbers.append(itemnumber)    
             sellsitemname = items[itemnumber] #randomly chosen number is then used to pick item from items list
             sellsitemnames.append(sellsitemname) #stores the item name into the list
             sellsprice = round(math.log(i*itemnumber + 5) + 1, 2) #prices are unique and i basically indicates a unique bar number this basically makes the condition 2 
