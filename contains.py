@@ -3,14 +3,21 @@ import random
 import numpy
 import pandas
 
+def randomizer(itemindex, *itemnumbers): #this is a recursive function to make sure there aren't any duplicates
+        itemnumber = random.choice(itemindex) #randomly choose a number from the array of numbers
+        for i in range(len(itemnumbers)):
+                if itemnumber == itemnumbers[i]:
+                        itemnumber = randomizer(itemindex, itemnumber)
+        return itemnumber
+
 with open('sales.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
-    bars = []
+    salesbars = []
     transactionids = []
     for row in readCSV:
         bar = row[0]
         transactionid = row[1]
-        bars.append(bar)
+        salesbars.append(bar)
         transactionids.append(transactionid)
 
 with open('sells.csv') as csvfile:
@@ -23,23 +30,35 @@ with open('sells.csv') as csvfile:
         sellsbars.append(sellsbar)
         sellsitems.append(sellsitem)
 
-n = len(transactionids)
-m = len(sellsbars)
-possibleindicators = [1,2,3,4]
+temp_item_list = []
 finalids = []
 finalitems = []
 quantity = []
-for i in range(n):
+possibleitemindicators = []
+itemindex = []
+for i in range(4):
+    if i>=1 and i<=4: # bars can sell at least 5 items and at most 10 items
+        possibleitemindicators.append(i)
+for i in range(len(transactionids)):
+    irange = random.choice(possibleitemindicators)
     if i>=1:
-        for j in range(m):
-            if bars[i] == sellsbars[j]:
-                choose = random.choice(possibleindicators)
-                if choose == 1:
-                    tempid = transactionids[i]
-                    finalids.append(tempid)
-                    tempitem = sellsitems[j]
-                    finalitems.append(tempitem)
-                    quantity.append(random.randint(1,5))
+        for j in range(len(sellsbars)):
+            if salesbars[i] == sellsbars[j]:
+                temp_item_list.append(sellsitems[j])
+        for w in range(len(temp_item_list)):
+            itemindex.append(w)  #index to randomly choose from which item that the bar sells
+        itemnumbers = [] #this array is going to be used when I make a function call later to choose which items to sell
+        for k in range(irange): #going to go as many times as there are items in the specific bar
+            if k == 0:
+                itemnumber = random.choice(itemindex)
+                itemnumbers.append(itemnumber)    
+            finalids.append(transactionids[i])
+            itemnumber = randomizer(itemindex, itemnumbers)
+            itemnumbers.append(itemnumber) 
+            finalitems.append(temp_item_list[itemnumber])
+            quantity.append(random.randint(1,5))
+        temp_item_list = []
+        itemindex = []          
 
 a = numpy.array(finalids)
 b = numpy.array(finalitems)
