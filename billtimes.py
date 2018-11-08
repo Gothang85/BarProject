@@ -39,6 +39,7 @@ del barotimes[0]
 del barctimes[0]
 
 billstimes = []
+billsdates = []
 billstransids = []
 for i in range(len(salestransids)):
     billtransid = salestransids[i]
@@ -52,8 +53,19 @@ for i in range(len(salestransids)):
         minute = str(minute)
     billstime = hr + ":" + minute
     billstimes.append(billstime)
+    year = random.choice(range(2016, 2017))
+    month = random.choice(range(1, 13))
+    day = random.choice(range(1, 29))
+    billdatedate = datetime(year, month, day)
+
+    month = str(month)
+    day = str(day)
+    year = str(year)
+    billsdate = month + "-" + day + "-" + year
+    billsdates.append(billsdate)
 
 a1 = numpy.array(billstransids)
 b1 = numpy.array(billstimes)
-df = pandas.DataFrame({"transactionids" : a1, "times" : b1})
+c1 = numpy.array(billsdates)
+df = pandas.DataFrame({"transactionids" : a1, "times" : b1, "dates" : c1})
 df.to_csv("billtimes.csv", index=False)

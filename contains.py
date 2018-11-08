@@ -42,7 +42,6 @@ for i in range(4):
 for i in range(len(transactionids)):
     irange = random.choice(possibleitemindicators)
     if i>=1:
-<<<<<<< HEAD
         for j in range(len(sellsbars)):
             if salesbars[i] == sellsbars[j]:
                 temp_item_list.append(sellsitems[j])
@@ -58,19 +57,8 @@ for i in range(len(transactionids)):
             itemnumbers.append(itemnumber) 
             finalitems.append(temp_item_list[itemnumber])
             quantity.append(random.randint(1,5))
-        temp_item_list = []
+            temp_item_list = []
         itemindex = []          
-=======
-        for j in range(m):
-            if bars[i] == sellsbars[j]:
-                choose = random.choice(possibleindicators)
-                for k in range(choose):
-                    tempid = transactionids[i]
-                    finalids.append(tempid)
-                    tempitem = sellsitems[j]
-                    finalitems.append(tempitem)
-                    quantity.append(random.randint(1,5))
->>>>>>> 6f2fc2a6d505ee476992a0e9e94ac12da83c9efa
 
 a = numpy.array(finalids)
 b = numpy.array(finalitems)
