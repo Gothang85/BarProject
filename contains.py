@@ -34,7 +34,7 @@ for i in range(n):
         for j in range(m):
             if bars[i] == sellsbars[j]:
                 choose = random.choice(possibleindicators)
-                if choose == 1:
+                for k in range(choose):
                     tempid = transactionids[i]
                     finalids.append(tempid)
                     tempitem = sellsitems[j]
